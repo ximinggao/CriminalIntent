@@ -16,9 +16,9 @@ public class Crime {
     private static final String JSON_DATE = "date";
 
     private UUID id;
-    private String title;
+    private String title = "";
     private Date date;
-    private boolean solved;
+    private boolean solved = false;
 
     public Crime() {
         id = UUID.randomUUID();

@@ -3,6 +3,7 @@ package com.bignerdranch.android.criminalintent;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.Date;
 import java.util.UUID;
@@ -33,6 +35,7 @@ public class CrimeFragment extends Fragment {
     private EditText titleField;
     private Button dateButton;
     private CheckBox solvedCheckBox;
+    private ImageButton photoButton;
 
     @Override
     public void onPause() {
@@ -116,6 +119,20 @@ public class CrimeFragment extends Fragment {
                 crime.setSolved(isChecked);
             }
         });
+
+        photoButton = (ImageButton)rootView.findViewById(R.id.crime_imageButton);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CrimeCameraActivity.class);
+                startActivity(i);
+            }
+        });
+
+        PackageManager pm = getActivity().getPackageManager();
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+            photoButton.setEnabled(false);
+        }
 
         return rootView;
     }
